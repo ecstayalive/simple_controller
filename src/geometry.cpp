@@ -212,7 +212,7 @@ Eigen::VectorXd adjointMap(const Eigen::Ref<const Eigen::Matrix4d> &trans_mat,
   return result;
 }
 
-void twistHomoAdjointMapToTwistHomo(
+void adjointMapTwistHomoToTwistHomo(
     const Eigen::Ref<const Eigen::Matrix4d> &trans_mat,
     const Eigen::Ref<const Eigen::Matrix4d> &twist_homo,
     Eigen::Ref<Eigen::Matrix4d> result) {
@@ -224,11 +224,11 @@ void twistHomoAdjointMapToTwistHomo(
   result = trans_mat * twist_homo * trans_mat_inv;
 }
 
-Eigen::Matrix4d twistHomoAdjointMapToTwistHomo(
+Eigen::Matrix4d adjointMapTwistHomoToTwistHomo(
     const Eigen::Ref<const Eigen::Matrix4d> &trans_mat,
     const Eigen::Ref<const Eigen::Matrix4d> &twist_homo) {
   Eigen::Matrix4d result;
-  twistHomoAdjointMapToTwistHomo(trans_mat, twist_homo, result);
+  adjointMapTwistHomoToTwistHomo(trans_mat, twist_homo, result);
   return result;
 }
 

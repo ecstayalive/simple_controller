@@ -154,11 +154,11 @@ void adjointMap(const Eigen::Ref<const Eigen::Matrix4d> &trans_mat,
  * @param twist_homo
  * @param result
  */
-void twistHomoAdjointMapToTwistHomo(
+void adjointMapTwistHomoToTwistHomo(
     const Eigen::Ref<const Eigen::Matrix4d> &trans_mat,
     const Eigen::Ref<const Eigen::Matrix4d> &twist_homo,
     Eigen::Ref<Eigen::Matrix4d> result);
-[[nodiscard]] Eigen::Matrix4d twistHomoAdjointMapToTwistHomo(
+[[nodiscard]] Eigen::Matrix4d adjointMapTwistHomoToTwistHomo(
     const Eigen::Ref<const Eigen::Matrix4d> &trans_mat,
     const Eigen::Ref<const Eigen::Matrix4d> &twist_homo);
 

@@ -29,7 +29,7 @@ class DemoEnv {
   std::vector<Eigen::Vector3d> arm_joint_init_pos_;
   std::vector<Eigen::Matrix3d> arm_joint_init_rot_;
   std::vector<Eigen::Vector2d> arm_joint_limits_;
-  std::vector<double> arm_joint_init_angles_;
+  Eigen::VectorXd arm_joint_init_angles_;
   std::vector<Eigen::Vector3d> arm_joint_axis_;
   Eigen::Vector3d end_effector_init_pos_P_;
   size_t end_effector_frame_idx;
