@@ -212,9 +212,56 @@
       <inertia ixx="0.00018328" ixy="1.22e-06" ixz="5.4e-07" iyy="0.0001475" iyz="8e-08" izz="0.0001468"/>
     </inertial>
   </link>
+  <joint name="gripperStator" type="fixed">
+    <origin rpy="0 0 0" xyz="0.051 0.0 0.0"/>
+    <parent link="link06"/>
+    <child link="gripperStator"/>
+  </joint>
+  <link name="gripperStator">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/z1_GripperStator.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/collision/z1_GripperStator.obj" scale="1 1 1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.04764427 -0.00035819 -0.00249162"/>
+      <mass value="0.52603655"/>
+      <inertia ixx="0.00038683" ixy="-3.59e-06" ixz="7.662e-05" iyy="0.00068614" iyz="2.09e-06" izz="0.00066293"/>
+    </inertial>
+  </link>
+  <joint name="jointGripper" type="fixed">
+    <origin rpy="0 0 0" xyz="0.049 0.0 0"/>
+    <parent link="gripperStator"/>
+    <child link="gripperMover"/>
+    <axis xyz="0 1 0"/>
+    <dynamics damping="1.0" friction="1.0"/>
+    <limit effort="30.0" lower="-1.5707963267948966" upper="0.0" velocity="3.1415"/>
+  </joint>
+  <link name="gripperMover">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/z1_GripperMover.dae" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="meshes/collision/z1_GripperMover.obj" scale="1 1 1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin rpy="0 0 0" xyz="0.01320633 0.00476708 0.00380534"/>
+      <mass value="0.27621302"/>
+      <inertia ixx="0.00017716" ixy="1.683e-05" ixz="-1.786e-05" iyy="0.00026787" iyz="2.62e-06" izz="0.00035728"/>
+    </inertial>
+  </link>
   <joint name="endEffector" type="fixed">
     <origin rpy="0 0 0" xyz="0.094 0.0 0" />
-    <parent link="link06"/>
+    <parent link="gripperStator"/>
     <child link="endEffector" />
   </joint>
   <link name="endEffector">

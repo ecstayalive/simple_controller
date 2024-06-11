@@ -9,7 +9,7 @@ namespace demo {
 
 class Controller {
  public:
-  void init(const std::string &urdf_path);
+  void init(const std::string& urdf_path);
 
   /**
    * @brief Use task error Jacobian matrix to solve the inverse kinematic
@@ -35,19 +35,8 @@ class Controller {
    * @return Eigen::VectorXd
    */
   Eigen::VectorXd solveInvKinematic(pinocchio::SE3 desired_pose,
-                                    Eigen::VectorXd initial_guess);
-  /**
-   * @brief Use body pose Jacobian matrix to solve the inverse kinematic problem
-   * @details Compared with using the error task Jacobian matrix, this method
-   * has lower applicability and is accompanied by instability in the
-   * intermediate process.
-   * @version 1.0
-   * @param desired_pose
-   * @param initial_guess
-   * @return Eigen::VectorXd The result
-   */
-  Eigen::VectorXd solveInvKinematic1(pinocchio::SE3 desired_pose,
-                                     Eigen::VectorXd initial_guess);
+                                    Eigen::VectorXd initial_guess,
+                                    double& error);
 
   /**
    * @brief
@@ -61,6 +50,12 @@ class Controller {
                                   Eigen::VectorXd q, Eigen::VectorXd dq);
 
   pinocchio::Model getRobotModel() const { return model_; }
+
+  pinocchio::Data getRobotData() const { return data_; }
+
+  int getEndEffectorFrameId() const { return end_effector_frame_id_; }
+
+  int getEndJointId() const { return end_joint_id_; }
 
   void setMaxIterations(int max_iterations) {
     max_iterations_ = max_iterations;
@@ -76,7 +71,7 @@ class Controller {
   // inverse kinematics
   ////////////////////////////////
   double eps_ = 1e-4;  ///< the twist error
-  int max_iterations_ = 1000;
+  int max_iterations_ = 10;
   double dt_ = 0.1;
   double damp_ = 1e-3;
   Eigen::Matrix<double, 6, 6> identity_mat_;
