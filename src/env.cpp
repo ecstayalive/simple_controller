@@ -67,7 +67,7 @@ DemoEnv::~DemoEnv() {
 }
 
 void DemoEnv::main() {
-  Eigen::Quaterniond q = Eigen::Quaterniond(0.1, 0.35, 0.2, 0.3).normalized();
+  Eigen::Quaterniond q = Eigen::Quaterniond(1, 0.5, 0.2, 0.3).normalized();
   Eigen::Matrix3d rot = q.toRotationMatrix();
   Eigen::Vector3d translation{0.6, 0.2, 0.43};
   raisim::Visuals* target = server_->addVisualSphere("target", 0.05);

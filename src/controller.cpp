@@ -50,11 +50,19 @@ Eigen::VectorXd Controller::solveInvKinematic(pinocchio::SE3 desired_pose,
     //                                 jacobian_mat_B);
     pinocchio::computeFrameJacobian(model_, data_, theta,
                                     end_effector_frame_id_, jacobian_mat_B);
-    pinocchio::Jlog6(pose_B.inverse(), jaco_log6);
+    // pinocchio::Jlog6(pose_B.inverse(), jaco_log6);
+    // jacobian_mat_E = -jaco_log6 * jacobian_mat_B;
+    // pinocchio::Data::Matrix6 JJt;
+    // JJt.noalias() = jacobian_mat_E * jacobian_mat_E.transpose();
+    // v.noalias() = -jacobian_mat_E.transpose() *
+    // JJt.ldlt().solve(error_vec_B);
+    pinocchio::Jlog6(pose_B, jaco_log6);
     jacobian_mat_E = -jaco_log6 * jacobian_mat_B;
-    pinocchio::Data::Matrix6 JJt;
-    JJt.noalias() = jacobian_mat_E * jacobian_mat_E.transpose();
-    v.noalias() = -jacobian_mat_E.transpose() * JJt.ldlt().solve(error_vec_B);
+    // use pseudo inverse matrix
+    v = -jacobian_mat_E.transpose() *
+        (jacobian_mat_E * jacobian_mat_E.transpose() + damp_ * identity_mat_)
+            .inverse() *
+        error_vec_B;
     theta = pinocchio::integrate(model_, theta, v * dt_);
     ++iteration;
   }
